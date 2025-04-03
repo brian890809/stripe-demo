@@ -2,12 +2,12 @@ import { Suspense } from "react"
 import { SuccessContent } from "./success-content"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 
-export default function SuccessPage({
+export default async function SuccessPage({
   searchParams,
 }: {
   searchParams: { session_id?: string }
 }) {
-  const sessionId = searchParams.session_id
+  const { session_id: sessionId } = await searchParams
 
   if (!sessionId) {
     return (
