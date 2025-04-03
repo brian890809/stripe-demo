@@ -4,7 +4,7 @@ import { redirect } from "next/navigation"
 import Stripe from "stripe"
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
-  apiVersion: "2023-10-16",
+  apiVersion: "2025-03-31.basil",
 })
 
 export async function createCheckoutSession() {
@@ -29,19 +29,14 @@ export async function createCheckoutSession() {
     cancel_url: `${baseUrl}`,
   }
   try {
-    const session = await stripe.checkout.sessions.create(createSessionObj)
-    console.log("seesion")
-    console.log(session)
-    const { url } = session
-    if (url) {
-      console.log(url)
-      redirect(url)
+    const session = await stripe.checkout.sessions.create(createSessionObj as Stripe.Checkout.SessionCreateParams)
+    if (session.url) {
+      return { success: true, url: session.url }
     }
+    return { success: false, error: "No checkout URL returned from Stripe" }
   } catch (error) {
-    console.log("error")
-    console.log(error)
     console.error("Error creating checkout session:", error)
-    redirect(`${baseUrl}/error`)
+    return { success: false, error: "Failed to create checkout session" }
   }
 }
 

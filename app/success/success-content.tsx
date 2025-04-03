@@ -74,7 +74,7 @@ export function SuccessContent({ sessionId }: { sessionId: string }) {
     )
   }
 
-  const successMessage = `Payment Confirmed! Thank you ${paymentDetails.customerEmail} for your payment of ${paymentDetails.currency} ${paymentDetails.amount}. Transaction ID: ${paymentDetails.paymentId}`
+  const successMessage = `Payment Confirmed! Thank you for your payment of ${paymentDetails.currency} ${paymentDetails.amount}. Transaction ID: ${paymentDetails.paymentId}`
 
   return (
     <Card className="w-full max-w-md">
@@ -101,7 +101,7 @@ export function SuccessContent({ sessionId }: { sessionId: string }) {
         <div className="flex flex-col items-center space-y-4">
           <p className="text-center text-sm text-gray-600">Here's your payment confirmation QR code:</p>
           <div className="rounded-lg bg-white p-4 shadow-sm">
-            <QRCodeSVG id="qr-code" value={successMessage} size={200} level="M" includeMargin={true} />
+            <QRCodeSVG id="qr-code" value={successMessage} size={200} level="M" />
           </div>
           <Button variant="outline" onClick={downloadQRCode} className="flex items-center gap-2">
             <Download size={16} />
